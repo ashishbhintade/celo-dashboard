@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { aggregateTokens, AggregatedToken } from "@/app/lib/aggragateTokens";
-
+import TokenSelector from "./TokenSelector";
 export default function TokenPieChart() {
   const [allTokens, setAllTokens] = useState<AggregatedToken[]>([]);
   const [filteredTokens, setFilteredTokens] = useState<AggregatedToken[]>([]);
@@ -104,22 +104,11 @@ export default function TokenPieChart() {
         </div>
 
         {/* Token Checkboxes */}
-        <div>
-          <label className="block mb-1">Select Tokens</label>
-          <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border p-2 rounded">
-            {uniqueTokens.map((token) => (
-              <label key={token} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  value={token}
-                  checked={selectedTokens.includes(token)}
-                  onChange={() => toggleToken(token)}
-                />
-                {token}
-              </label>
-            ))}
-          </div>
-        </div>
+        <TokenSelector
+          tokens={uniqueTokens}
+          selectedTokens={selectedTokens}
+          toggleToken={toggleToken}
+        />
       </div>
 
       {/* Pie Chart */}
