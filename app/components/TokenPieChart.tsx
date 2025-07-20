@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { aggregateTokens, AggregatedToken } from "@/app/lib/aggragateTokens";
 import TokenSelector from "./TokenSelector";
+
 export default function TokenPieChart() {
   const [allTokens, setAllTokens] = useState<AggregatedToken[]>([]);
   const [filteredTokens, setFilteredTokens] = useState<AggregatedToken[]>([]);
@@ -70,8 +71,21 @@ export default function TokenPieChart() {
       .join("path")
       .attr("d", arc)
       .attr("fill", (_, i) => color(i.toString()))
-      .on("mouseover", (event, d) => setHoveredToken(d.data.token))
-      .on("mouseout", () => setHoveredToken(null))
+      .on("mouseover", function (event, d) {
+        setHoveredToken(d.data.token);
+        const [x, y] = arc.centroid(d);
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("transform", `translate(${x * 0.1}, ${y * 0.1})`);
+      })
+      .on("mouseout", function () {
+        setHoveredToken(null);
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("transform", `translate(0, 0)`);
+      })
       .append("title")
       .text((d) => `${d.data.token}: ${formatBalance(d.data.usdValue)}`);
   }, [filteredTokens]);
