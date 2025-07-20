@@ -111,7 +111,7 @@ export default function TokenPieChart() {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Token Distribution (Filtered)</h2>
+      <h2 className="text-xl font-bold mb-4">Reserve Holdings</h2>
 
       {/* Filters */}
       <div className="flex flex-col gap-4 mb-4">
