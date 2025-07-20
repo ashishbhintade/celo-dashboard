@@ -51,7 +51,12 @@ export default function TokenPieChart() {
     const height = 300;
     const radius = Math.min(width, height) / 2;
 
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    // const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const color = d3
+      .scaleOrdinal<string, string>()
+      .domain(filteredTokens.map((t) => t.token))
+      .range(d3.schemeCategory10.concat(d3.schemeSet2, d3.schemeSet1).flat());
+
     const pie = d3.pie<AggregatedToken>().value((d) => d.usdValue);
     const arc = d3
       .arc<d3.PieArcDatum<AggregatedToken>>()
@@ -158,26 +163,28 @@ export default function TokenPieChart() {
                 <div className="h-3 bg-gray-200 rounded w-1/3" />
               </div>
             ))
-          : filteredTokens.map((token) => (
-              <div
-                key={token.token + token.chain}
-                className={`p-4 rounded-2xl shadow-md border transition-all ${
-                  hoveredToken === token.token
-                    ? "border-amber-500 bg-amber-50 shadow-lg scale-[1.02]"
-                    : "border-gray-200 bg-white"
-                }`}
-              >
-                <div className="mt-1 text-lg font-semibold text-gray-800">
-                  {token.token}
+          : [...filteredTokens]
+              .sort((a, b) => b.usdValue - a.usdValue)
+              .map((token) => (
+                <div
+                  key={token.token + token.chain}
+                  className={`p-4 rounded-2xl shadow-md border transition-all ${
+                    hoveredToken === token.token
+                      ? "border-amber-500 bg-amber-50 shadow-lg scale-[1.02]"
+                      : "border-gray-200 bg-white"
+                  }`}
+                >
+                  <div className="mt-1 text-lg font-semibold text-gray-800">
+                    {token.token}
+                  </div>
+                  <div className="mt-1 text-gray-700">
+                    ${formatReadable(token.usdValue)} USD
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {((token.usdValue / totalUsdValue) * 100).toFixed(2)}%
+                  </div>
                 </div>
-                <div className="mt-1 text-gray-700">
-                  ${formatReadable(token.usdValue)} USD
-                </div>
-                <div className="text-sm text-gray-500">
-                  {((token.usdValue / totalUsdValue) * 100).toFixed(2)}%
-                </div>
-              </div>
-            ))}
+              ))}
       </div>
     </div>
   );
