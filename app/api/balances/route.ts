@@ -131,6 +131,10 @@ const input = [
         name: "eurc",
         tokenAddress: "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
       },
+      {
+        name: "sDAI",
+        tokenAddress: "0x83F20F44975D03b1b09E64809B757c47f942BEeA",
+      },
     ],
   },
   {

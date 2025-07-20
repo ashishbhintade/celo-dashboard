@@ -32,7 +32,7 @@ export default function TokenSelector({
           Deselect All Tokens
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-3 max-h-60 overflow-y-auto border rounded-lg p-3 bg-white shadow-sm">
+      <div className="grid grid-cols-2 gap-3 max-h-65 overflow-y-auto border rounded-lg p-3 bg-white shadow-sm">
         {loading
           ? Array.from({ length: 10 }).map((_, index) => (
               <div
