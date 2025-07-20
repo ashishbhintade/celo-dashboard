@@ -104,6 +104,7 @@ export default function TokenPieChart() {
           <select
             value={selectedChain}
             onChange={(e) => setSelectedChain(e.target.value)}
+            disabled={loading}
             className="block w-full px-2 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-200 bg-white text-gray-700"
           >
             <option value="celo">Celo</option>
@@ -117,6 +118,7 @@ export default function TokenPieChart() {
           tokens={uniqueTokens}
           selectedTokens={selectedTokens}
           toggleToken={toggleToken}
+          loading={loading}
         />
       </div>
 
