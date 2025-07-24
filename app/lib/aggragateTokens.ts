@@ -1,6 +1,7 @@
 export type TokenBalance = {
   chain: string;
   walletAddress: string;
+  label: string;
   token: string;
   balance: number;
   usdPrice: number;
@@ -9,6 +10,7 @@ export type TokenBalance = {
 
 export type AggregatedToken = {
   token: string;
+  label: string;
   balance: number;
   usdValue: number;
   usdPrice: number;
@@ -34,6 +36,7 @@ export function aggregateTokens(data: TokenBalance[]): AggregatedToken[] {
       perChainMap.set(chainKey, {
         token,
         chain: item.chain,
+        label: item.label,
         balance: item.balance,
         usdValue: item.usdValue,
         usdPrice: item.usdPrice,
@@ -49,6 +52,7 @@ export function aggregateTokens(data: TokenBalance[]): AggregatedToken[] {
       combinedMap.set(combinedKey, {
         token,
         chain: "both",
+        label: item.label,
         balance: item.balance,
         usdValue: item.usdValue,
         usdPrice: item.usdPrice,

@@ -6,6 +6,7 @@ const input = [
   {
     chain: "celo",
     walletAddress: "0x9380fA34Fd9e4Fd14c06305fd7B6199089eD4eb9",
+    label: "Mento Pools Liquidity Reserve",
     assets: [
       {
         name: "celo",
@@ -32,6 +33,7 @@ const input = [
   {
     chain: "celo",
     walletAddress: "0x87647780180b8f55980c7d3ffefe08a9b29e9ae1",
+    label: "Mento Reserve Custody Multisig",
     assets: [
       {
         name: "celo",
@@ -46,6 +48,7 @@ const input = [
   {
     chain: "celo",
     walletAddress: "0x87647780180b8f55980c7d3ffefe08a9b29e9ae1",
+    label: "Mento Reserve Custody Multisig",
     assets: [
       {
         name: "celo",
@@ -68,6 +71,7 @@ const input = [
   {
     chain: "celo",
     walletAddress: "0x87647780180B8f55980C7D3fFeFe08a9B29e9aE1",
+    label: "Mento Operational Multisig",
     assets: [
       {
         name: "celo",
@@ -82,6 +86,7 @@ const input = [
   {
     chain: "celo",
     walletAddress: "0xD3D2e5c5Af667DA817b2D752d86c8f40c22137E1",
+    label: "Mento Operational Multisig",
     assets: [
       {
         name: "celo",
@@ -108,6 +113,7 @@ const input = [
   {
     chain: "celo",
     walletAddress: "0x9d65E69aC940dCB469fd7C46368C1e094250a400",
+    label: "Celo Community Shared Reserve",
     assets: [
       {
         name: "celo",
@@ -118,6 +124,7 @@ const input = [
   {
     chain: "ethereum",
     walletAddress: "0xd0697f70E79476195B742d5aFAb14BE50f98CC1E",
+    label: "Mento Reserve Custody Multisig",
     assets: [
       {
         name: "wbtc",
@@ -139,7 +146,8 @@ const input = [
   },
   {
     chain: "ethereum",
-    walletAddress: "0xd0697f70E79476195B742d5aFAb14BE50f98CC1E",
+    walletAddress: "0xD3D2e5c5Af667DA817b2D752d86c8f40c22137E1",
+    label: "Mento Operational Multisig",
     assets: [
       {
         name: "usdt",
@@ -168,7 +176,7 @@ export async function GET() {
 
   try {
     const results = await Promise.all(
-      input.flatMap(async ({ chain, walletAddress, assets }) => {
+      input.flatMap(async ({ chain, walletAddress, assets, label }) => {
         const baseUrl = `${ALCHEMY_URLS[chain]}${apiKey}`;
 
         const assetPromises = assets.map(async ({ name, tokenAddress }) => {
@@ -220,6 +228,7 @@ export async function GET() {
             return {
               chain,
               walletAddress,
+              label,
               token: symbol,
               balance,
               usdPrice,
@@ -229,6 +238,7 @@ export async function GET() {
             return {
               chain,
               walletAddress,
+              label,
               token: name,
               balance: 0,
               usdPrice: 0,
@@ -270,6 +280,7 @@ export async function GET() {
                   return {
                     chain,
                     walletAddress,
+                    label,
                     token: "ETH",
                     balance: ethBalance,
                     usdPrice: ethPrice,
@@ -279,6 +290,7 @@ export async function GET() {
                   return {
                     chain,
                     walletAddress,
+                    label,
                     token: "ETH",
                     balance: 0,
                     usdPrice: 0,
